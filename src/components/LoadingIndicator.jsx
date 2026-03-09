@@ -1,0 +1,1 @@
+import React from 'react'; import { Loader } from 'lucide-react'; function LoadingIndicator() { return ( <div className="loading-indicator"> <Loader size={24} /> <span>Loading recipes...</span> </div> ); } export default LoadingIndicator;

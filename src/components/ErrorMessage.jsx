@@ -1,11 +1,1 @@
-import React from 'react';
-
-function ErrorMessage({ message }) {
-  return (
-    <div className="error-message">
-      <p>{message}</p>
-    </div>
-  );
-}
-
-export default ErrorMessage;
+import React from 'react'; import { AlertCircle } from 'lucide-react'; function ErrorMessage({ message }) { return ( <div className="error-message"> <AlertCircle size={24} /> <span>Error: {message || 'Something went wrong.'}</span> </div> ); } export default ErrorMessage;
