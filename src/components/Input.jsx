@@ -1,0 +1,2 @@
+import React from 'react';function Input({ label, id, type = 'text', value, onChange, placeholder, ...props }) {return (<div className="form-group"><label htmlFor={id}>{label}</label><input type={type} id={id} className="form-input" value={value} onChange={onChange} placeholder={placeholder} {...props} /></div>);
+}export default Input;

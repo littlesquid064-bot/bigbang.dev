@@ -1,0 +1,1 @@
+import React from 'react';import { Outlet } from 'react-router-dom';import Header from './Header';function Layout({ isAuthenticated, userName, onLogout }) {return (<div className="layout"><Header isAuthenticated={isAuthenticated} userName={userName} onLogout={onLogout} /><main className="main-content"><Outlet /></main></div>);}export default Layout;

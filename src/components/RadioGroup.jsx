@@ -1,0 +1,3 @@
+import React from 'react';function RadioGroup({ label, name, options, selectedValue, onChange }) {return (<div className="form-group"><label>{label}</label><div className="radio-group">{options.map((option) => (<label key={option} className="radio-option"><input type="radio" name={name} value={option} checked={selectedValue === option} onChange={onChange} />{option}</label>))}
+</div></div>);
+}export default RadioGroup;

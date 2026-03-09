@@ -1,0 +1,1 @@
+import React from 'react';function Radio({ label, id, name, value, checked, onChange, ...props }) {return (<label htmlFor={id} className="radio-option"><input type="radio" id={id} name={name} value={value} checked={checked} onChange={onChange} {...props} />{label}</label>);};export default Radio;
