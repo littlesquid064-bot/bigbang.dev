@@ -1,1 +1,0 @@
-import React from 'react'; import { Routes, Route } from 'react-router-dom'; import RecipeListPage from './pages/RecipeListPage'; import RecipeDetailPage from './pages/RecipeDetailPage'; function App() { return ( <Routes> <Route path="/" element={<RecipeListPage />} /> <Route path="/recipes/:id" element={<RecipeDetailPage />} /> </Routes> ); } export default App;

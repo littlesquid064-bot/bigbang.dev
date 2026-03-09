@@ -1,1 +1,0 @@
-import React from 'react'; import { Menu } from 'lucide-react'; import { Link } from 'react-router-dom'; function Header() { return ( <header className="header"> <Link to="/"> <h1>Kitchen Companion</h1> </Link> <button className="header-icon-button"> <Menu /> </button> </header> ); } export default Header;
