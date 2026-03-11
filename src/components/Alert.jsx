@@ -1,2 +1,0 @@
-import React from 'react';import { Info, CheckCircle, XCircle } from 'lucide-react';function Alert({ message, type = 'info' }) {let IconComponent;let alertClass = 'alert-info';switch (type) {case 'success':IconComponent = CheckCircle;alertClass = 'alert-success';break;case 'error':IconComponent = XCircle;alertClass = 'alert-error';break;default:IconComponent = Info;alertClass = 'alert-info';}return (<div className={`alert ${alertClass}`}><IconComponent size={20} />{message}</div>);
-}export default Alert;

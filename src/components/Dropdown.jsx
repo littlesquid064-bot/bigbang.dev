@@ -1,2 +1,0 @@
-import React from 'react';function Dropdown({ label, id, options, selectedValue, onChange, ...props }) {return (<div className="form-group"><label htmlFor={id}>{label}</label><select id={id} className="form-select" value={selectedValue} onChange={onChange} {...props}>{options.map((option) => (<option key={option} value={option}>{option}</option>))}</select></div>);
-}export default Dropdown;

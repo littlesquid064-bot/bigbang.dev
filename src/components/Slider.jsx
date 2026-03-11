@@ -1,2 +1,0 @@
-import React from 'react';function Slider({ label, id, minValue, maxValue, value, onChange, labels = [] }) {return (<div className="form-group slider-container"><label htmlFor={id}>{label}</label><input type="range" id={id} min={minValue} max={maxValue} value={value} onChange={onChange} /><div className="slider-value">{value} {labels.length === 2 && `(${value === minValue ? labels[0] : value === maxValue ? labels[1] : ''})`}</div></div>);
-}export default Slider;

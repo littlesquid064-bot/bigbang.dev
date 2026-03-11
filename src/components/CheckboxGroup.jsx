@@ -1,3 +1,0 @@
-import React from 'react';function CheckboxGroup({ label, name, options, selectedValues, onChange }) {const handleChange = (e) => {const { value, checked } = e.target;let newSelectedValues;if (checked) {newSelectedValues = [...selectedValues, value];} else {newSelectedValues = selectedValues.filter((v) => v !== value);}onChange({ target: { name, value: newSelectedValues } });};return (<div className="form-group"><label>{label}</label><div className="checkbox-group">{options.map((option) => (<label key={option} className="checkbox-option"><input type="checkbox" name={name} value={option} checked={selectedValues.includes(option)} onChange={handleChange} />{option}</label>))}
-</div></div>);
-}export default CheckboxGroup;

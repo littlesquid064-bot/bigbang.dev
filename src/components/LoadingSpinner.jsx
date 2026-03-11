@@ -1,2 +1,0 @@
-import React from 'react';function LoadingSpinner({ size = 'medium' }) {const sizeClass = `loading-spinner-${size}`;return (<div className={`loading-spinner ${sizeClass}`}></div>);
-}export default LoadingSpinner;

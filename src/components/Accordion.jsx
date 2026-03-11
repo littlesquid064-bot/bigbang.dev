@@ -1,3 +1,0 @@
-import React, { useState } from 'react';import { ChevronRight } from 'lucide-react';function Accordion({ title, children }) {const [isOpen, setIsOpen] = useState(false);const toggleAccordion = () => {setIsOpen(!isOpen);};return (<div className="accordion-item"><div className={`accordion-header ${isOpen ? 'expanded' : ''}`} onClick={toggleAccordion}>{title}<ChevronRight size={20} /></div>{isOpen && (<div className="accordion-content">{children}</div>)}
-</div>);
-}export default Accordion;

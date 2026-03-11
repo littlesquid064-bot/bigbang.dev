@@ -1,2 +1,32 @@
-import React from 'react';import { Link } from 'react-router-dom';import { LogIn, LogOut, User } from 'lucide-react';function Header({ isAuthenticated, userName, onLogout }) {return (<header><Link to="/" className="header-logo">AI Readiness Index</Link><nav className="header-nav"><ul><li><Link to="/dashboard">Dashboard</Link></li><li><Link to="/assessment">Assessment</Link></li><li><Link to="/reports">Reports</Link></li><li><Link to="/benchmarking">Benchmarking</Link></li></ul></nav><div className="header-auth">{isAuthenticated ? (<><span>Hello, {userName}</span><Link to="/profile" className="form-button" style={{ marginLeft: '15px', width: 'auto' }}><User size={18} style={{ marginRight: '5px' }} /> Profile</Link><button onClick={onLogout} style={{ marginLeft: '10px' }}><LogOut size={18} style={{ marginRight: '5px' }} /> Logout</button></>) : (<Link to="/login" className="form-button"><LogIn size={18} style={{ marginRight: '5px' }} /> Login</Link>)}</div></header>);}
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ChevronLeft } from 'lucide-react';
+
+function Header() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isDetailPage = location.pathname.startsWith('/recipes/');
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
+  return (
+    <header className="header">
+      {isDetailPage ? (
+        <button onClick={handleBackClick} className="back-button">
+          <ChevronLeft size={20} />
+          Back
+        </button>
+      ) : (
+        <div /> /* Placeholder for alignment when no back button */
+      )}
+      <Link to="/" className="header-title">
+        Recipe Finder
+      </Link>
+      <div /> {/* Placeholder for alignment */}
+    </header>
+  );
+}
+
 export default Header;

@@ -1,2 +1,0 @@
-import React from 'react';function Textarea({ label, id, value, onChange, placeholder, ...props }) {return (<div className="form-group"><label htmlFor={id}>{label}</label><textarea id={id} className="form-textarea" value={value} onChange={onChange} placeholder={placeholder} {...props}></textarea></div>);
-}export default Textarea;

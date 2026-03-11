@@ -1,1 +1,21 @@
-import React, { useState } from 'react';import { Routes, Route, useNavigate } from 'react-router-dom';import Layout from './components/Layout';import LoginPage from './pages/LoginPage';import DashboardPage from './pages/DashboardPage';import AssessmentPage from './pages/AssessmentPage';import ReportsPage from './pages/ReportsPage';import BenchmarkingPage from './pages/BenchmarkingPage';import ProfilePage from './pages/ProfilePage';import NotFoundPage from './pages/NotFoundPage';function App() {const [isAuthenticated, setIsAuthenticated] = useState(false);const [userName, setUserName] = useState('');const navigate = useNavigate();const handleLogin = (name) => {setIsAuthenticated(true);setUserName(name);navigate('/dashboard');};const handleLogout = () => {setIsAuthenticated(false);setUserName('');navigate('/login');};return (<Routes><Route path="/login" element={<LoginPage onLogin={handleLogin} />} /><Route path="/signup" element={<LoginPage onLogin={handleLogin} isSignup />} /><Route element={<Layout isAuthenticated={isAuthenticated} userName={userName} onLogout={handleLogout} />}>{isAuthenticated ? (<> <Route path="/" element={<DashboardPage />} /><Route path="/dashboard" element={<DashboardPage />} /><Route path="/assessment" element={<AssessmentPage />} /><Route path="/reports" element={<ReportsPage />} /><Route path="/benchmarking" element={<BenchmarkingPage />} /><Route path="/profile" element={<ProfilePage />} /></>) : (<Route path="*" element={<LoginPage onLogin={handleLogin} />} />)}<Route path="*" element={<NotFoundPage />} /></Route></Routes>);}export default App;
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import HomePage from './pages/HomePage';
+import RecipeDetailPage from './pages/RecipeDetailPage';
+
+function App() {
+  return (
+    <div className="app-container">
+      <Header />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/recipes/:id" element={<RecipeDetailPage />} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
+export default App;

@@ -1,1 +1,0 @@
-import React from 'react';function Checkbox({ label, id, name, value, checked, onChange, ...props }) {return (<label htmlFor={id} className="checkbox-option"><input type="checkbox" id={id} name={name} value={value} checked={checked} onChange={onChange} {...props} />{label}</label>);};export default Checkbox;
