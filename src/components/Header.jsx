@@ -1,32 +1,20 @@
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
+import { Search, Bell } from 'lucide-react';
 
-function Header() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const isDetailPage = location.pathname.startsWith('/recipes/');
-
-  const handleBackClick = () => {
-    navigate(-1);
-  };
-
+const Header = ({ title }) => {
   return (
     <header className="header">
-      {isDetailPage ? (
-        <button onClick={handleBackClick} className="back-button">
-          <ChevronLeft size={20} />
-          Back
+      <h1>{title}</h1>
+      <div className="header-actions">
+        <button className="button icon-only">
+          <Search size={24} />
         </button>
-      ) : (
-        <div /> /* Placeholder for alignment when no back button */
-      )}
-      <Link to="/" className="header-title">
-        Recipe Finder
-      </Link>
-      <div /> {/* Placeholder for alignment */}
+        <button className="button icon-only">
+          <Bell size={24} />
+        </button>
+      </div>
     </header>
   );
-}
+};
 
 export default Header;
