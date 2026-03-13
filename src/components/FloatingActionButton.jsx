@@ -1,11 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function FloatingActionButton({ icon, onClick, label = "Add" }) {
+const FloatingActionButton = ({ children, to, onClick }) => {
+  if (to) {
+    return (
+      <Link to={to} className="fab">
+        {children}
+      </Link>
+    );
+  }
+
   return (
-    <button className="fab" onClick={onClick} aria-label={label}>
-      {icon}
+    <button onClick={onClick} className="fab">
+      {children}
     </button>
   );
-}
+};
 
 export default FloatingActionButton;

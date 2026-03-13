@@ -1,1 +1,0 @@
-import React from 'react';function SummaryCard({title,value,description,onClick}) {return (<div className="summary-card" onClick={onClick}> <h3 className="summary-card-title">{title}</h3> <p className="summary-card-value">{value}</p> {description && (<p className="summary-card-description">{description}</p>)} </div>);}export default SummaryCard;

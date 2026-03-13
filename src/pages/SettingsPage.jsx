@@ -1,1 +1,71 @@
-import React from 'react';function SettingsPage() {return (<div className="settings-page"> <h2 className="page-title">Settings</h2> <div className="detail-section"> <h3 className="detail-section-title">App Information</h3> <div className="detail-item"> <span className="detail-label">Version:</span> <span className="detail-value">1.0.0</span> </div> <div className="detail-item"> <span className="detail-label">Developer:</span> <span className="detail-value">KitchenFlow Team</span> </div> </div> <div className="detail-section"> <h3 className="detail-section-title">Account</h3> <div className="detail-item"> <span className="detail-label">User:</span> <span className="detail-value">Admin User</span> </div> <div className="detail-item"> <span className="detail-label">Email:</span> <span className="detail-value">admin@kitchenflow.com</span> </div> </div> <div className="detail-section"> <h3 className="detail-section-title">General Settings</h3> <div className="detail-item"> <span className="detail-label">Notifications:</span> <span className="detail-value">Enabled</span> </div> <div className="detail-item"> <span className="detail-label">Local Data Sync:</span> <span className="detail-value">Active</span> </div> </div> </div>);}export default SettingsPage;
+import React, { useState } from 'react';
+
+const SettingsPage = () => {
+  const [kitchenName, setKitchenName] = useState('My Awesome Kitchen');
+  const [contactEmail, setContactEmail] = useState('contact@awesomekitchen.com');
+  const [contactPhone, setContactPhone] = useState('+123 456 7890');
+
+  const handleSaveSettings = (e) => {
+    e.preventDefault();
+    alert('Settings saved successfully!');
+    // In a real app, you would save these to a backend or local storage
+  };
+
+  return (
+    <div className="settings-page">
+      <div className="card">
+        <h2 className="text-lg mb-16">Kitchen Profile</h2>
+        <form onSubmit={handleSaveSettings} className="settings-form">
+          <div className="input-group">
+            <label htmlFor="kitchenName">Kitchen Name</label>
+            <input
+              type="text"
+              id="kitchenName"
+              name="kitchenName"
+              value={kitchenName}
+              onChange={(e) => setKitchenName(e.target.value)}
+              className="input-field"
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="contactEmail">Contact Email</label>
+            <input
+              type="email"
+              id="contactEmail"
+              name="contactEmail"
+              value={contactEmail}
+              onChange={(e) => setContactEmail(e.target.value)}
+              className="input-field"
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="contactPhone">Contact Phone</label>
+            <input
+              type="tel"
+              id="contactPhone"
+              name="contactPhone"
+              value={contactPhone}
+              onChange={(e) => setContactPhone(e.target.value)}
+              className="input-field"
+            />
+          </div>
+          <button type="submit" className="button">
+            Save Settings
+          </button>
+        </form>
+      </div>
+
+      <div className="card mt-16">
+        <h2 className="text-lg mb-16">About</h2>
+        <p className="text-sm text-color-light">
+          Mobile Kitchen Dashboard v1.0.0
+        </p>
+        <p className="text-sm text-color-light mt-8">
+          Developed to streamline order, payment, and inventory management for small kitchens.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default SettingsPage;

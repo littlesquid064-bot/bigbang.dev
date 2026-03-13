@@ -1,1 +1,99 @@
-import React, { useState } from 'react';import { Search, ListOrdered, Plus } from 'lucide-react';import OrderCard from '../components/OrderCard';import InputField from '../components/InputField';import Dropdown from '../components/Dropdown';import Button from '../components/Button';import EmptyState from '../components/EmptyState';function OrdersPage({orders,navigateTo}) {const [searchTerm, setSearchTerm] = useState('');const [filterStatus, setFilterStatus] = useState('all');const statusOptions = [{label: 'All',value: 'all',},{label: 'New',value: 'new',},{label: 'Preparing',value: 'preparing',},{label: 'Ready',value: 'ready',},{label: 'Delivered',value: 'delivered',},{label: 'Cancelled',value: 'cancelled',},];const filteredOrders = orders.filter(order => {const matchesSearch = order.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||order.items.some(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));const matchesStatus = filterStatus === 'all' || order.status === filterStatus;return matchesSearch && matchesStatus;}).sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));return (<div className="orders-page"> <h2 className="page-title">Orders</h2> <div className="search-filter-bar"> <InputField type="text" placeholder="Search orders..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} icon={Search} /> <Dropdown id="status-filter" options={statusOptions} value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} /> </div> {filteredOrders.length === 0 ? (<EmptyState icon={ListOrdered} title="No Orders Found" message="It looks like there are no orders matching your criteria." actionButton={<Button variant="primary" onClick={() => navigateTo('add-order')} icon={Plus}> Add New Order </Button>} />) : (<div className="list-container"> {filteredOrders.map((order) => (<OrderCardkey={order.id}order={order}onClick={() => navigateTo('order-detail', { orderId: order.id })}/>))} </div>)} </div>);}export default OrdersPage;
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { CheckCircle, Circle, ArrowRight } from 'lucide-react';
+import EmptyState from '../components/EmptyState';
+import { formatCurrency, formatDate } from '../utils/helpers';
+
+const OrderStatusBadge = ({ status }) => {
+  let badgeClass = '';
+  switch (status) {
+    case 'new': badgeClass = 'new'; break;
+    case 'preparing': badgeClass = 'preparing'; break;
+    case 'ready': badgeClass = 'ready'; break;
+    case 'delivered': badgeClass = 'delivered'; break;
+    case 'cancelled': badgeClass = 'cancelled'; break;
+    default: badgeClass = 'new';
+  }
+  return <span className={`status-badge ${badgeClass}`}>{status}</span>;
+};
+
+const OrdersPage = ({ orders, showToast, showDialog }) => {
+  const [activeTab, setActiveTab] = useState('pending'); // 'pending' or 'completed'
+
+  const filteredOrders = orders.filter(order => {
+    if (activeTab === 'pending') {
+      return order.status !== 'delivered' && order.status !== 'cancelled';
+    }
+    return order.status === 'delivered' || order.status === 'cancelled';
+  });
+
+  const sortedOrders = [...filteredOrders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  if (sortedOrders.length === 0) {
+    return (
+      <div className="orders-page">
+        <div className="tab-bar">
+          <div
+            className={`tab-item ${activeTab === 'pending' ? 'active' : ''}`}
+            onClick={() => setActiveTab('pending')}
+          >
+            Pending
+          </div>
+          <div
+            className={`tab-item ${activeTab === 'completed' ? 'active' : ''}`}
+            onClick={() => setActiveTab('completed')}
+          >
+            Completed
+          </div>
+        </div>
+        <EmptyState
+          title={`No ${activeTab} orders yet`}
+          message="Start by adding a new order to your kitchen dashboard."
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="orders-page">
+      <div className="tab-bar">
+        <div
+          className={`tab-item ${activeTab === 'pending' ? 'active' : ''}`}
+          onClick={() => setActiveTab('pending')}
+        >
+          Pending
+        </div>
+        <div
+          className={`tab-item ${activeTab === 'completed' ? 'active' : ''}`}
+          onClick={() => setActiveTab('completed')}
+        >
+          Completed
+        </div>
+      </div>
+
+      <div className="order-list">
+        {sortedOrders.map((order) => (
+          <Link to={`/orders/${order.id}`} key={order.id} className="list-item">
+            <div className="list-item-content">
+              <div className="list-item-title">Order #{order.id.substring(0, 6)} - {order.customerName}</div>
+              <div className="list-item-subtitle">
+                {formatDate(order.createdAt)} | {formatCurrency(order.totalAmount)}
+              </div>
+            </div>
+            <div className="list-item-actions flex-row gap-8">
+              <OrderStatusBadge status={order.status} />
+              {order.isPaid ? (
+                <CheckCircle size={20} className="text-success" />
+              ) : (
+                <Circle size={20} className="text-danger" />
+              )}
+              <ArrowRight size={20} className="text-color-light" />
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default OrdersPage;

@@ -1,1 +1,0 @@
-import React from 'react';import { Plus } from 'lucide-react';function FAB({navigateTo}) {return (<button className="fab" onClick={() => navigateTo('add-order')}> <Plus size={32} /> </button>);}export default FAB;

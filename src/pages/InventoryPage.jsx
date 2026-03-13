@@ -1,1 +1,120 @@
-import React, { useState } from 'react';import { Search, Package, Plus } from 'lucide-react';import InventoryItemCard from '../components/InventoryItemCard';import InputField from '../components/InputField';import Button from '../components/Button';import EmptyState from '../components/EmptyState';function InventoryPage({inventory,navigateTo}) {const [searchTerm, setSearchTerm] = useState('');const filteredInventory = inventory.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => a.name.localeCompare(b.name));return (<div className="inventory-page"> <h2 className="page-title">Inventory</h2> <div className="search-filter-bar"> <InputField type="text" placeholder="Search inventory..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} icon={Search} /> <Button variant="primary" onClick={() => navigateTo('add-inventory-item')} icon={Plus}> Add Item </Button> </div> {filteredInventory.length === 0 ? (<EmptyState icon={Package} title="No Inventory Items" message="It looks like there are no inventory items yet." actionButton={<Button variant="primary" onClick={() => navigateTo('add-inventory-item')} icon={Plus}> Add New Item </Button>} />) : (<div className="list-container"> {filteredInventory.map((item) => (<InventoryItemCardkey={item.id}item={item}onClick={() => navigateTo('edit-inventory-item', { inventoryItemId: item.id })}/>))} </div>)} </div>);}export default InventoryPage;
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Search, Filter, AlertCircle, ArrowRight, PackageSearch } from 'lucide-react';
+import EmptyState from '../components/EmptyState';
+
+const InventoryPage = ({ inventoryItems, showToast, showDialog }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterType, setFilterType] = useState('all'); // 'all', 'raw_material', 'finished_product'
+  const [sortBy, setSortBy] = useState('name'); // 'name', 'stock'
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterType(e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
+  const filteredAndSortedItems = inventoryItems
+    .filter(item => {
+      const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesType = filterType === 'all' || item.type === filterType;
+      return matchesSearch && matchesType;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'name') {
+        return a.name.localeCompare(b.name);
+      }
+      if (sortBy === 'stock') {
+        return a.currentStock - b.currentStock;
+      }
+      return 0;
+    });
+
+  if (filteredAndSortedItems.length === 0) {
+    return (
+      <div className="inventory-page">
+        <div className="search-bar-container">
+          <Search size={20} />
+          <input
+            type="text"
+            placeholder="Search inventory items..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+        </div>
+        <div className="filter-sort-container">
+          <select value={filterType} onChange={handleFilterChange} className="dropdown-select">
+            <option value="all">All Types</option>
+            <option value="raw_material">Raw Materials</option>
+            <option value="finished_product">Finished Products</option>
+          </select>
+          <select value={sortBy} onChange={handleSortChange} className="dropdown-select">
+            <option value="name">Sort by Name</option>
+            <option value="stock">Sort by Stock</option>
+          </select>
+        </div>
+        <EmptyState
+          icon={PackageSearch}
+          title="No items found"
+          message="Try adjusting your search or filters, or add a new inventory item."
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="inventory-page">
+      <div className="search-bar-container">
+        <Search size={20} />
+        <input
+          type="text"
+          placeholder="Search inventory items..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </div>
+
+      <div className="filter-sort-container">
+        <select value={filterType} onChange={handleFilterChange} className="dropdown-select">
+          <option value="all">All Types</option>
+          <option value="raw_material">Raw Materials</option>
+          <option value="finished_product">Finished Products</option>
+        </select>
+        <select value={sortBy} onChange={handleSortChange} className="dropdown-select">
+          <option value="name">Sort by Name</option>
+          <option value="stock">Sort by Stock</option>
+        </select>
+      </div>
+
+      <div className="inventory-list">
+        {filteredAndSortedItems.map((item) => (
+          <Link to={`/inventory/${item.id}`} key={item.id} className="list-item">
+            <div className="list-item-content">
+              <div className="list-item-title">{item.name}</div>
+              <div className="list-item-subtitle">
+                Current Stock: {item.currentStock} {item.unit} 
+                {item.type === 'finished_product' && item.unitPrice && ` | $${item.unitPrice.toFixed(2)}/${item.unit}`}
+              </div>
+            </div>
+            <div className="list-item-actions flex-row gap-8">
+              {item.currentStock <= item.lowStockThreshold && (
+                <span className="low-stock-alert">
+                  <AlertCircle size={18} /> Low Stock
+                </span>
+              )}
+              <ArrowRight size={20} className="text-color-light" />
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default InventoryPage;

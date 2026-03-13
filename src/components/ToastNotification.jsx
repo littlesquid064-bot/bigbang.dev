@@ -1,1 +1,11 @@
-import React, { useEffect, useState } from 'react';function ToastNotification({message,type = 'success',onClose}) {const [visible, setVisible] = useState(true);useEffect(() => {const timer = setTimeout(() => {setVisible(false);onClose();}, 3000);return () => clearTimeout(timer);}, [onClose]);if (!visible) return null;return (<div className={`toast-notification ${type}`}> {message} </div>);}export default ToastNotification;
+import React from 'react';
+
+const ToastNotification = ({ message, type = 'info' }) => {
+  return (
+    <div className={`toast-notification ${type}`}>
+      {message}
+    </div>
+  );
+};
+
+export default ToastNotification;
