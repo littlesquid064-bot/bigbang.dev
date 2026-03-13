@@ -1,16 +1,14 @@
 import React from 'react';
 
-const Button = ({ children, onClick, variant = 'primary', className = '', ...props }) => {
-  const buttonClass = `button ${variant} ${className}`.trim();
+function Button({ children, onClick, variant = 'primary', icon: Icon, type = 'button' }) {
+  const buttonClass = `button button-${variant}`;
+
   return (
-    <button
-      className={buttonClass}
-      onClick={onClick}
-      {...props}
-    >
+    <button type={type} onClick={onClick} className={buttonClass}>
+      {Icon && <Icon size={20} />}
       {children}
     </button>
   );
-};
+}
 
 export default Button;

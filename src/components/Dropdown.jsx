@@ -1,15 +1,15 @@
 import React from 'react';
 
-const Select = ({ label, id, value, onChange, options, className = '', ...props }) => {
+function Dropdown({ label, value, onChange, options, id, name }) {
   return (
-    <div className="input-group">
-      {label && <label htmlFor={id}>{label}</label>}
+    <div className="form-group dropdown-container">
+      {label && <label htmlFor={id} className="form-label">{label}</label>}
       <select
         id={id}
+        name={name}
         value={value}
         onChange={onChange}
-        className={`select-field ${className}`.trim()}
-        {...props}
+        className="form-select"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -19,6 +19,6 @@ const Select = ({ label, id, value, onChange, options, className = '', ...props 
       </select>
     </div>
   );
-};
+}
 
-export default Select;
+export default Dropdown;
