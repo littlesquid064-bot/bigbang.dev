@@ -1,0 +1,1 @@
+import React from 'react';function QuickActionButton({icon: Icon,label,onClick}) {return (<button className="quick-action-button" onClick={onClick}> {Icon && <Icon size={24} />} {label} </button>);}export default QuickActionButton;

@@ -1,15 +1,1 @@
-import React from 'react';
-
-function SettingsPage() {
-  return (
-    <div className="settings-page">
-      <h1 className="mb-4">Settings</h1>
-      <div className="card p-4">
-        <p className="text-gray-600">Manage application settings here.</p>
-        <p className="mt-2">Account information, notification preferences, and other configurations will be available soon.</p>
-      </div>
-    </div>
-  );
-}
-
-export default SettingsPage;
+import React from 'react';function SettingsPage() {return (<div className="settings-page"> <h2 className="page-title">Settings</h2> <div className="detail-section"> <h3 className="detail-section-title">App Information</h3> <div className="detail-item"> <span className="detail-label">Version:</span> <span className="detail-value">1.0.0</span> </div> <div className="detail-item"> <span className="detail-label">Developer:</span> <span className="detail-value">KitchenFlow Team</span> </div> </div> <div className="detail-section"> <h3 className="detail-section-title">Account</h3> <div className="detail-item"> <span className="detail-label">User:</span> <span className="detail-value">Admin User</span> </div> <div className="detail-item"> <span className="detail-label">Email:</span> <span className="detail-value">admin@kitchenflow.com</span> </div> </div> <div className="detail-section"> <h3 className="detail-section-title">General Settings</h3> <div className="detail-item"> <span className="detail-label">Notifications:</span> <span className="detail-value">Enabled</span> </div> <div className="detail-item"> <span className="detail-label">Local Data Sync:</span> <span className="detail-value">Active</span> </div> </div> </div>);}export default SettingsPage;
